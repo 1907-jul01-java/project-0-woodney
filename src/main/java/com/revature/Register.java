@@ -3,10 +3,11 @@ package com.revature;
 
 public class Register
 {
-    public String firstname;
-    public String lastname;
-    public String address;
-    public String birthdate;
+    private String firstname;
+    private String lastname;
+    private String address;
+    private String birthdate;
+    private static int client = 0;
 
     public Register(String firstname, String lastname, String address, String birthdate)
     {
@@ -14,6 +15,7 @@ public class Register
         this.lastname = lastname;
         this.address = address;
         this.birthdate = birthdate;
+        client++;
     }
 
     @Override
