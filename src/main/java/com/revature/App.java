@@ -9,8 +9,10 @@ public class App
     
     public static void main(String[] args) 
     {
-        int num;
-        ArrayList<Register> customer = new ArrayList<>();
+        int num, client = 0;
+        String user,pass,cur_user,cur_pass;
+        ArrayList<Register> customers = new ArrayList<>();
+
         do
         {
 
@@ -31,6 +33,10 @@ public class App
                 String l = myObj.nextLine();
                 System.out.println("Please enter your address: ");
                 String a = myObj.nextLine();
+                System.out.println("Create your username: ");
+                String u = myObj.nextLine();
+                System.out.println("Create your password: ");
+                String p = myObj.nextLine();
                 System.out.println("City: ");
                 String c = myObj.nextLine();
                 System.out.println("State: ");
@@ -38,21 +44,22 @@ public class App
                 System.out.println("Please enter your birthdate (mm/dd/yyyy): ");
                 String d = myObj.nextLine();
                 SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
-                customer.add(new Register(f,l,a,c,s,d));
-                for (Register r: customer)
-                {
-                    System.out.println(r);
-                }
+                customers.add(new Register(f,l,u,p,a,c,s,d));
+                cur_pass = customers.get(client).getPassword();
+                cur_user = customers.get(client).getUsername();
             }
 
             if (num == 2)
             {
-
+                System.out.println("Username: ");
+                user = myObj.nextLine();
+                System.out.println("Password: ");
+                pass = myObj.nextLine();
             }
 
-            if (num != 1 || num != 2)
+            if (num != 1 && num != 2 && num != 3)
             {
-                System.out.println("Invalid entry!");
+                System.err.println("Error, Invalid Entry");;
             }
 
         } while(num != 3);

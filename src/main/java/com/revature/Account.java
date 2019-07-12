@@ -10,5 +10,4 @@ public class Account
     private String user_id;
     private Transaction Transaction;
     private ArrayList<Transaction> transactions = new ArrayList<>();
-
 }
