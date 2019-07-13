@@ -1,4 +1,5 @@
 package com.revature;
+import com.revature.util.ConnectionUtil;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,10 @@ public class App
     {
         String user,pass,cur_user,cur_pass;
         ArrayList<Register> customers = new ArrayList<>();
+        ConnectionUtil connectionUtil = new ConnectionUtil();
+        User new_user = new User(connectionUtil.getConnection());
+        new_user.insert(new Register("ruth_30","leo3030"));
+        connectionUtil.close();
 
         do
         {

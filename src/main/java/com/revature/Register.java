@@ -42,6 +42,11 @@ public class Register
 
     }
 
+    public Register(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     
 
     @Override
