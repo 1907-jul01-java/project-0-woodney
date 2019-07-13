@@ -6,10 +6,11 @@ import java.text.SimpleDateFormat;
 
 public class App 
 {
+    static String f,l,a,u,p,c,s,d;
+    static int num, client = -1;
     
     public static void main(String[] args) 
     {
-        int num, client = 0;
         String user,pass,cur_user,cur_pass;
         ArrayList<Register> customers = new ArrayList<>();
 
@@ -27,37 +28,47 @@ public class App
 
             if (num == 1)
             {
+                client++;
                 System.out.println("Please enter your First name: ");
-                String f = myObj.nextLine();
+                f = myObj.nextLine();
                 System.out.println("Please enter your last name: ");
-                String l = myObj.nextLine();
+                l = myObj.nextLine();
                 System.out.println("Please enter your address: ");
-                String a = myObj.nextLine();
+                a = myObj.nextLine();
                 System.out.println("Create your username: ");
-                String u = myObj.nextLine();
+                u = myObj.nextLine();
                 System.out.println("Create your password: ");
-                String p = myObj.nextLine();
+                p = myObj.nextLine();
                 System.out.println("City: ");
-                String c = myObj.nextLine();
+                c = myObj.nextLine();
                 System.out.println("State: ");
-                String s = myObj.nextLine();
+                s = myObj.nextLine();
                 System.out.println("Please enter your birthdate (mm/dd/yyyy): ");
-                String d = myObj.nextLine();
+                d = myObj.nextLine();
                 SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
                 customers.add(new Register(f,l,u,p,a,c,s,d));
                 cur_pass = customers.get(client).getPassword();
                 cur_user = customers.get(client).getUsername();
             }
 
-            if (num == 2)
+            else if (num == 2)
             {
+                System.out.println(u + " " + p);
                 System.out.println("Username: ");
                 user = myObj.nextLine();
                 System.out.println("Password: ");
                 pass = myObj.nextLine();
+                if (user != u && pass != p)
+                {
+                    System.out.println("False");
+                }
+                else
+                {
+                    System.out.println("True");
+                }
             }
 
-            if (num != 1 && num != 2 && num != 3)
+            else if (num != 1 && num != 2 && num != 3)
             {
                 System.err.println("Error, Invalid Entry");;
             }
