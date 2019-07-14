@@ -16,7 +16,8 @@ public class App
         ArrayList<Register> customers = new ArrayList<>();
         ConnectionUtil connectionUtil = new ConnectionUtil();
         User new_user = new User(connectionUtil.getConnection());
-        new_user.insert(new Register("ruth_30","leo3030"));
+        //new_user.insert(new Register("ruth_30","leo3030"));
+        new_user.get_username();
         connectionUtil.close();
 
         do
@@ -55,6 +56,7 @@ public class App
                 cur_pass = customers.get(client).getPassword();
                 cur_user = customers.get(client).getUsername();
             }
+            
 
             else if (num == 2)
             {
@@ -79,7 +81,6 @@ public class App
             }
 
         } while(num != 3);
-
 
     }
 }
