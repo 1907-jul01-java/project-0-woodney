@@ -1,7 +1,4 @@
 drop table if exists client,bankaccount,bankTransaction,employee;
-drop sequence if exists client_id_seq,bank_id_seq;
---create sequence client_id_seq increment by 30 minvalue 400000 maxvalue 20000000 start with 428193;
---create sequence bank_id_seq increment by 30 minvalue 400000 maxvalue 20000000 start with 428193;
 
  create table client 
 (
@@ -17,17 +14,18 @@ drop sequence if exists client_id_seq,bank_id_seq;
 );
 
 
+
 create table bankAccount (
     id serial primary key references client(id),
-    checking_account_balance numeric(12,2),
-    savings_account_balance numeric(12,2)
+    checking_account_balance float,
+    savings_account_balance float
 );
 
 create table bankTransaction (
     id serial primary key references client(id),
     transaction_type text not null,
     amount int not null,
-    previous_balance numeric(12,2)
+    previous_balance float
 );
 
 create table employee (
@@ -36,8 +34,5 @@ create table employee (
     employee_password text not null
 );
 
-
 --insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('woodneyg', 'password','Woodney', 'Guerrier','10802 Ryan Oaks Dr', 'Houston', 'Texas', '12/15/1994');
 --insert into bankAccount(checking_account_balance,savings_account_balance) values (0.00, 0.00);
---update bankAccount set checking_account_balance = 400.00;
---update bankAccount set savings_account_balance = 400.00;
