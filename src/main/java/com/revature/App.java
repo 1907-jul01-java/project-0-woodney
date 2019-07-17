@@ -21,7 +21,7 @@ public class App
         connectionUtil.close();
     }
 
-    public static void mainMenu(User new_user) {
+    public static void mainMenu(User currentUser) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Register> customers = new ArrayList<>();
 
@@ -56,11 +56,14 @@ public class App
                 System.out.println("Please enter your birthdate (mm/dd/yyyy): ");
                 d = sc.nextLine();
                 SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
-                new_user.createUser(new Register(f,l,u,p,a,c,s,d));
-                customers.add(new Register(f,l,u,p,a,c,s,d));
-                System.out.printf("New user %s, %s created. \n", f, l);
-                System.out.printf("Your username: %s, Your password: %s. Store information in a secure place. \n", u, p);
                 client++;
+                System.out.println();
+                System.out.println();
+                System.out.printf("New user %s, %s created. \n", f, l);
+                System.out.printf("Your id: %s \n", client);
+                System.out.printf("Your username: %s, Your password: %s. Store information in a secure place. \n", u, p);
+                currentUser.createUser(new Register(f,l,u,p,a,c,s,d,client));
+                customers.add(new Register(f,l,u,p,a,c,s,d,client));
             }
             
 
@@ -68,25 +71,48 @@ public class App
             {
                 Register cur_User;
                 boolean success = false;
+                int acctChoice;
                 do
                 {
-                    u = sc.nextLine();
-                    System.out.println("Enter username: ");
-                    u = sc.nextLine();
-                    System.out.println("Enter password: ");
-                    p = sc.nextLine();
-                    //System.out.println(customers.get(0).getUsername());
+                    System.out.println("Please select one of the following: ");
+                    System.out.println("1.Personal Account");
+                    System.out.println("2.Joint Account");
+                    acctChoice = sc.nextInt();
+                    if(acctChoice == 1)
+                    {
+                        u = sc.nextLine();
+                        System.out.println("Enter username: ");
+                        u = sc.nextLine();
+                        System.out.println("Enter password: ");
+                        p = sc.nextLine();
+                        //System.out.println(customers.get(0).getUsername());
 
-                    for (Register r : customers) {
-                        if (r.getUsername().compareTo(u) == 0 && r.getPassword().compareTo(p) == 0) {
-                                System.out.println("Login Successful!");
-                                success = true;
+                        for (Register r : customers) {
+                            if (r.getUsername().compareTo(u) == 0 && r.getPassword().compareTo(p) == 0) {
+                                    System.out.println("Login Successful!");
+                                    success = true;
+                            }
                         }
                     }
+                    else if(acctChoice == 2){
+                        u = sc.nextLine();
+                        System.out.println("Enter username: ");
+                        u = sc.nextLine();
+                        System.out.println("Enter password: ");
+                        p = sc.nextLine();
+                        //System.out.println(customers.get(0).getUsername());
+
+                        for (Register r : customers) {
+                            if (r.getUsername().compareTo(u) == 0 && r.getPassword().compareTo(p) == 0) {
+                                    System.out.println("Login Successful!");
+                                    success = true;
+                            }
+                    }
+                }
                 }while(success == false);
 
                 while(true) {
-                    App.userMenu(sc, new_user);   
+                    App.userMenu(sc, currentUser);  
                 }
         
             }
@@ -95,6 +121,10 @@ public class App
             else if (num < 1 || num > 4)
             {
                 System.err.println("Error, Invalid Entry");
+            }
+
+            else if (num == 4){
+                System.exit(1);
             }
 
         }while(num != 4);
@@ -107,63 +137,69 @@ public class App
 
         do {
             System.out.printf("Welcome, what would you like to do?\n");
-            System.out.println("  1) Show account transaction history");
-            System.out.println("  2) Withdraw");
-            System.out.println("  3) Deposit");
-            System.out.println("  4) Transfer");
-            System.out.println("  5) Create joint account");
-            System.out.println("  6) Logout");
+            System.out.println("  1) Withdraw");
+            System.out.println("  2) Deposit");
+            System.out.println("  3) Transfer");
+            System.out.println("  4) Create joint account");
+            System.out.println("  5) Logout");
             choice = sc.nextInt();
 
-            if (choice < 1 || choice > 6)
+            if (choice < 1 || choice > 5)
             {
                 System.out.println("Invalid choice. Please choose 1-5");
             }
-        }while(choice < 1 || choice > 6);
+        }while(choice < 1 || choice > 5);
 
         switch (choice) {
 
+            
             case 1: 
-                //App.showTransHistory(theUser, sc);
-                break;
-            case 2: 
                 App.withdrawFunds(sc,currentUser,client);
                 break;
-            case 3:
+            case 2:
                 App.depositFunds(sc,currentUser,client);
                 break;
-            case 4:
+            case 3:
                 App.transferFunds(sc,currentUser,client);
                 break;
-            case 5:
+            case 4:
+                App.createJointAccount(sc,currentUser);
                 break;
-            case 6:
+            case 5:
                 App.mainMenu(currentUser);
         }
 
-        if (choice !=6){
+        if (choice !=5){
             App.userMenu(sc, currentUser);
         }
 
-
+        App.mainMenu(currentUser);
     }
-    /*
-    public static void showTransHistory(Register theUser, Scanner sc) {
-    
-        int theAcct;
 
-        do {
-            System.out.printf("Enter the number (1-%d) of the account\n" + " whose transactions you want to see: ", theUser.numAccounts());
-            theAcct = sc.nextInt() -1;
-            if (theAcct < 0 || theAcct >= theUser.numAccounts()) {
-                System.out.println("Invalid account. Please try again. ");
-            }
-
-        } while(theAcct < 0 || theAcct >= theUser.numAccounts());
-
-        theUser.printAcctTransHistory(theAcct);
+    public static void createJointAccount(Scanner sc, User currentUser){
+        int account_a = client;
+        int account_b;
+        int check_a,check_b,savings_a,savings_b;
+        String username,password;
+        System.out.println("Type in the client id number to join accounts with");
+        account_b = sc.nextInt();
+        System.out.println();
+        username = sc.nextLine();
+        System.out.println("Create username");
+        username = sc.nextLine();
+        System.out.println("Create password");
+        password = sc.nextLine();
+        check_a = currentUser.get_checking_balance(account_a);
+        savings_a = currentUser.get_savings_balance(account_a);
+        check_b = currentUser.get_checking_balance(account_b);
+        savings_b = currentUser.get_savings_balance(account_b);
+        currentUser.joinAccounts(account_a,account_b,check_a,savings_a,check_b,savings_b,username,password);
+        client++;
+        System.out.printf("New user created.");
+        System.out.printf("Your id: %s \n", client);
+        System.out.printf("Your username: %s, Your password: %s. Store information in a secure place. \n", username, password);
+        App.mainMenu(currentUser);
     }
-    */
 
     public static void transferFunds(Scanner sc, User currentUser, int client) {
 
@@ -195,7 +231,7 @@ public class App
                     System.out.println("Amount must be greater than zero");
                 }
                 else if (amount > checking_acctBal) {
-                    System.out.printf("Amount must not be greater than\n" + "balance of $%.02f.\n", checking_acctBal);
+                    System.out.printf("Amount must not be greater than $" + checking_acctBal);
                 }
                 else {
                     System.out.println("Transfer to savings account ");
@@ -216,7 +252,7 @@ public class App
                     System.out.println("Amount must be greater than zero");
                 }
                 else if (amount > savings_acctBal) {
-                    System.out.printf("Amount must not be greater than\n" + "balance of $%.02f.\n", savings_acctBal);
+                    System.out.printf("Amount must not be greater than $" + savings_acctBal);
                 }
                 else {
                     System.out.println("Transfer to checking account");
@@ -257,9 +293,11 @@ public class App
     
                 if (amount < 0) {
                     System.out.println("Amount must be greater than zero");
+                    App.withdrawFunds(sc, currentUser, client);
                 }
                 else if (amount > checking_acctBal) {
-                    System.out.printf("Amount must not be greater than\n" + "balance of $%.02f.\n", checking_acctBal);
+                    System.out.println("Amount must not be greater than $" + checking_acctBal);
+                    App.withdrawFunds(sc, currentUser, client);
                 }
                 else {
                     System.out.println("Withdraw from checking account");
@@ -279,12 +317,14 @@ public class App
     
                 if (amount < 0) {
                     System.out.println("Amount must be greater than zero");
+                    App.withdrawFunds(sc, currentUser, client);
                 }
                 else if (amount > savings_acctBal) {
-                    System.out.printf("Amount must not be greater than\n" + "balance of $%.02f.\n", savings_acctBal);
+                    System.out.println("Amount must not be greater than $" + savings_acctBal);
+                    App.withdrawFunds(sc, currentUser, client);
                 }
                 else {
-                    System.out.printf("Withdraw from savings account");
+                    System.out.println("Withdraw from savings account");
                     currentUser.withdrawFunds(amount, savings,client);
                     App.userMenu(sc, currentUser);
                 }
@@ -317,7 +357,7 @@ public class App
             System.out.println(checking_acctBal);
             System.out.print("Enter the amount to deposit: ");
             amount = sc.nextInt();
-            System.out.printf("Deposit to account %s", checking);
+            System.out.println("Deposit to checking account");
             currentUser.depositFunds(amount, checking,client);
             App.userMenu(sc, currentUser);
         }
@@ -327,7 +367,7 @@ public class App
             System.out.println(savings_acctBal);
             System.out.print("Enter the amount to Deposit: ");
             amount = sc.nextInt();
-            System.out.printf("Deposit to account %s\n", savings);
+            System.out.println("Deposit to savings account");
             currentUser.depositFunds(amount, savings,client);
             App.userMenu(sc, currentUser);
         }

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * User
  */
-public class User implements Dao<Register> {
+public class User implements UserDao<Register> {
     Connection connection;
 
     public User(Connection connection) {
@@ -49,22 +49,6 @@ public class User implements Dao<Register> {
         }
 
     }
-    /*
-    public int get_client_id(String u, String p) {
-        int c_id = 0;
-        try {
-            PreparedStatement pst = connection.prepareStatement("select id from client where username = ? a user_password = ?");
-            pst.setString(1, u);
-            pst.setString(2, p);
-            ResultSet rs = pst.executeQuery();
-            //return rs.getInt("id");
-            c_id = rs.getInt("id");
-        }catch (SQLException e) {
-
-        }
-        return c_id;
-    }
-    */
 
     public void get_username() {
        
@@ -157,7 +141,7 @@ public class User implements Dao<Register> {
 
         try {
             PreparedStatement pst = connection.prepareStatement("update bankaccount set "+ f +"  = ? where id = ?");
-            pst.setDouble(1, difference);
+            pst.setInt(1, difference);
             pst.setInt(2, c);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -200,8 +184,22 @@ public class User implements Dao<Register> {
     }
 
 
-    public void joinAccounts(Register customer){
+    public void joinAccounts(int a, int b, int ca, int sa, int cb, int sb, String u, String p) {
+        
+        int checking_account_j = ca+cb;
+        int savings_account_j = sa+sb;
+        try {
+            PreparedStatement pst = connection.prepareStatement("insert into joint(username,password,checking_account_balance,savings_account_balance) values (?,?,?,?)");
+            pst.setString(1, u);
+            pst.setString(2, p);
+            pst.setInt(3, checking_account_j);
+            pst.setInt(4, savings_account_j);
+            pst.executeUpdate();
     
+        } catch (SQLException e) {
+            
+        }
+
     }
 
 

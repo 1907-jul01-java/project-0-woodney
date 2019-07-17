@@ -2,9 +2,9 @@ package com.revature;
 import java.util.List;
 
 /**
- * Dao
+ * UserDao
  */
-public interface Dao<E> 
+public interface UserDao<E> 
 {
     void insert(E e);
     void createUser(E e);
@@ -15,5 +15,5 @@ public interface Dao<E>
     void showTransHistory(E e);
     int depositFunds(int e, String p, int c);
     int withdrawFunds(int e,String p, int c);
-    void joinAccounts(E e);
+    void joinAccounts(int a, int b, int ca, int sa, int cb, int sb, String u, String p);
 }

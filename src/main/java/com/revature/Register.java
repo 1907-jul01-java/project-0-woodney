@@ -13,7 +13,7 @@ public class Register
     private String city;
     private String state;
     private String birthdate;
-    private String uuid;
+    private int client_id;
     private byte pinHash[];
     private ArrayList<Register> customers = new ArrayList<>();
     
@@ -23,7 +23,7 @@ public class Register
 
     }
     
-    public Register(String firstname, String lastname, String username, String password, String address, String city, String state, String birthdate)
+    public Register(String firstname, String lastname, String username, String password, String address, String city, String state, String birthdate, int client_id)
     {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -33,7 +33,7 @@ public class Register
         this.city = city;
         this.state = state;
         this.birthdate = birthdate;
-
+        this.client_id = client_id;
     }
 
 
@@ -48,29 +48,16 @@ public class Register
         return null;
      }
 
-    public Register(String firstname, String lastname, String username, String password)
+    public Register(String firstname, String lastname, String username, String password, int client_id)
     {
         this.username = username;
         this.password = password;
 
-        System.out.printf("New user %s, %s with ID %s created. \n", firstname, lastname, uuid);
+        System.out.printf("New user %s, %s with ID %s created. \n", firstname, lastname, client_id);
         System.out.printf("Your username: %s, Your password: %s. Store information in a secure place. \n", username, password);
     }
 
 
-
-    public String getUUID() {
-         return this.uuid = uuid;
-    }
-
-    public boolean validatePassword(String password) {
-
-        return false;
-    }
-
-    
-
-    
     @Override
     public String toString(){
         return "Registered [firstname = " + firstname + " , lastname = " + lastname + " , address = " + address + " , city = " + city + " , state = " + state + " , birthdate = " + birthdate + "]";
@@ -139,5 +126,6 @@ public class Register
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
+
     
 }
