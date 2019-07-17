@@ -21,9 +21,12 @@ public class App
         connectionUtil.close();
     }
 
+    
     public static void mainMenu(User currentUser) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Register> customers = new ArrayList<>();
+        ArrayList<Register> employees = new ArrayList<>();
+        employees.add(new Register("2713839","revature45"));
 
         do
         {
@@ -108,6 +111,7 @@ public class App
                                     success = true;
                             }
                     }
+                    
                 }
                 }while(success == false);
 
@@ -115,6 +119,27 @@ public class App
                     App.userMenu(sc, currentUser);  
                 }
         
+            }
+
+            else if(num == 3) {
+                boolean success = false;
+                do {
+                    u = sc.nextLine();
+                    System.out.println("Enter username: ");
+                    u = sc.nextLine();
+                    System.out.println("Enter password: ");
+                    p = sc.nextLine();
+
+                    for (Register e : employees){
+                        if (e.getUsername().compareTo(u) == 0 && e.getPassword().compareTo(p) == 0) {
+                                System.out.println("Login Successful!");
+                                success = true;
+                        }
+                }
+            }while(success == false);
+            while(true) {
+                App.userMenu(sc,currentUser);  
+            }
             }
 
     
@@ -131,6 +156,7 @@ public class App
 
     }
 
+    
     public static void userMenu(Scanner sc, User currentUser) { 
         currentUser.printSummary(client);
         int choice;
@@ -141,14 +167,15 @@ public class App
             System.out.println("  2) Deposit");
             System.out.println("  3) Transfer");
             System.out.println("  4) Create joint account");
-            System.out.println("  5) Logout");
+            System.out.println("  5) Employee?");
+            System.out.println("  6) Logout");
             choice = sc.nextInt();
 
-            if (choice < 1 || choice > 5)
+            if (choice < 1 || choice > 6)
             {
                 System.out.println("Invalid choice. Please choose 1-5");
             }
-        }while(choice < 1 || choice > 5);
+        }while(choice < 1 || choice > 6);
 
         switch (choice) {
 
@@ -166,6 +193,8 @@ public class App
                 App.createJointAccount(sc,currentUser);
                 break;
             case 5:
+                App.employeeMenu(sc,currentUser);
+            case 6:
                 App.mainMenu(currentUser);
         }
 
@@ -174,6 +203,68 @@ public class App
         }
 
         App.mainMenu(currentUser);
+    }
+
+    public static void employeeMenu(Scanner sc, User currentUser) {
+        int choice;
+        do{
+        System.out.printf("Welcome, what would you like to do?\n");
+            System.out.println("  1) View Client Information");
+            System.out.println("  2) Delete");
+            System.out.println("  3) View Client Accounts");
+            System.out.println("  4) Logout");
+            choice = sc.nextInt();
+        
+            if (choice < 1 || choice > 4)
+            {
+                System.out.println("Invalid choice. Please choose 1-5");
+            }
+        }while(choice < 1 || choice > 4);
+
+        switch (choice) {
+
+            
+            case 1: 
+                App.viewClients(sc,currentUser);
+                App.employeeMenu(sc, currentUser);
+                break;
+            case 2:
+                App.deleteClients(sc,currentUser);
+                App.employeeMenu(sc, currentUser);
+                break;
+            case 3:
+                App.viewClientAccounts(sc,currentUser);
+                App.employeeMenu(sc, currentUser);
+                break;
+            case 4:
+                App.mainMenu(currentUser);
+                App.employeeMenu(sc, currentUser);
+        }
+
+        if (choice !=4){
+            App.userMenu(sc, currentUser);
+        }
+
+        App.mainMenu(currentUser);
+
+    }
+
+    public static void viewClients(Scanner sc, User currentUser){
+        currentUser.view();
+    }
+    public static void viewClientAccounts(Scanner sc, User currentUser) {
+        int client_id;
+        System.out.println("Enter id of the client's account you want to review");
+        client_id = sc.nextInt();
+        currentUser.viewAccount(client_id);
+    }
+
+    public static void deleteClients(Scanner sc, User currentUser){
+        String client_id;
+        System.out.println("Enter username of the client you want to remove");
+        client_id = sc.nextLine();
+        client_id = sc.nextLine();
+        currentUser.delete(client_id);
     }
 
     public static void createJointAccount(Scanner sc, User currentUser){

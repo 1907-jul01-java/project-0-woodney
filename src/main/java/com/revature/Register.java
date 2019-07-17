@@ -37,6 +37,8 @@ public class Register
     }
 
 
+
+
     public Register customerLogin(String username, String password) {
 
         for (Register r : this.customers) {
@@ -47,6 +49,13 @@ public class Register
      
         return null;
      }
+
+     public Register(String username, String password) {
+
+        this.username = username;
+        this.password = password;
+     }
+
 
     public Register(String firstname, String lastname, String username, String password, int client_id)
     {

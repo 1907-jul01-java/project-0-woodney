@@ -7,8 +7,9 @@ import java.util.List;
 
  public interface EmployeeDao<E> {
 
-    void insert(E e);
-    void delete(E e);
+    void insert();
+    void view();
+    void delete();
     void depositFunds(int a, int c, String f);
     void withdrawFunds(int a, int c, String f);
 

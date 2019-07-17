@@ -6,7 +6,10 @@ import java.util.List;
  */
 public interface UserDao<E> 
 {
-    void insert(E e);
+    void insert();
+    void view();
+    void viewAccount(int c);
+    void delete(String c);
     void createUser(E e);
     void get_username();
     int get_savings_balance(int c);

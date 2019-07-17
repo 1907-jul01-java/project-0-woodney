@@ -15,15 +15,76 @@ public class User implements UserDao<Register> {
     }
    
     @Override
-    public void insert(Register customer) {
+    public void view() 
+    {
+        int counter = 1;
         try {
-            PreparedStatement pStatement = connection.prepareStatement("insert into client(username, user_password) values(?, ?)");
-            pStatement.setString(1, customer.getUsername());
-            pStatement.setString(2, customer.getPassword());
-            pStatement.executeUpdate();
+            PreparedStatement pStatement = connection.prepareStatement("select * from client");
+            ResultSet rs = pStatement.executeQuery();
+
+            while (rs.next()) {
+                System.out.println(counter + ". ");
+                System.out.print("First name: ");
+                System.out.print(rs.getString(2));
+                System.out.print(" Last name: ");
+                System.out.print(rs.getString(3));
+                System.out.print(" Username: ");
+                System.out.print(rs.getString(4));
+                System.out.print(" Password: ");
+                System.out.print(rs.getString(5));
+                System.out.print(" Address: ");
+                System.out.print(rs.getString(6));
+                System.out.print(" City: ");
+                System.out.print(rs.getString(7));
+                System.out.print(" State: ");
+                System.out.print(rs.getString(8));
+                System.out.print(" DOB: ");
+                System.out.print(rs.getString(9));
+                System.out.println();
+                counter++;
+            }
         } catch (SQLException e) {
 
         }
+    }
+
+    public void viewAccount(int c){
+
+        try {
+            PreparedStatement pStatement = connection.prepareStatement("select * from bankaccount where id = ?");
+            pStatement.setInt(1, c);
+            ResultSet rs = pStatement.executeQuery();
+
+            while (rs.next()) {
+            
+                System.out.print("Checking: ");
+                System.out.print(rs.getInt(2));
+                System.out.println();
+                System.out.println("Savings: ");
+                System.out.print(rs.getString(3));
+                System.out.println();
+            }
+            
+
+        } catch (SQLException e) {
+
+        }
+    }
+    public void delete(String c) {
+
+        try {
+            PreparedStatement pStatement = connection.prepareStatement("delete * from client where username = ?");
+            pStatement.setString(1, c);
+            pStatement.executeUpdate();
+
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+    public void insert() {
+
     }
 
     public void createUser(Register customer) {
