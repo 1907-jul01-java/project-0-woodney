@@ -14,7 +14,8 @@ public class Register
     private String state;
     private String birthdate;
     private int client_id;
-    private byte pinHash[];
+    private String first;
+    private String second;
     private ArrayList<Register> customers = new ArrayList<>();
     
 
@@ -55,6 +56,16 @@ public class Register
         this.username = username;
         this.password = password;
      }
+
+
+     public Register(String first, String second, String username, String password) {
+
+        this.first = first;
+        this.second = second;
+        this.username = username;
+        this.password = password;
+     }
+     
 
 
     public Register(String firstname, String lastname, String username, String password, int client_id)

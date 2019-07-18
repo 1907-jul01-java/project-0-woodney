@@ -12,6 +12,7 @@ public interface UserDao<E>
     void delete(String c);
     void createUser(E e);
     void get_username();
+    void checkjointaccount(String u, String p);
     int get_savings_balance(int c);
     int get_checking_balance(int c);
     void printSummary(int c);

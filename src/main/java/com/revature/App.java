@@ -10,7 +10,6 @@ public class App
 {
     static String f,l,a,u,p,c,s,d;
     static int num, client = 0;
-
     public static void main(String[] args) 
     {
         ConnectionUtil connectionUtil = new ConnectionUtil();
@@ -58,7 +57,6 @@ public class App
                 s = sc.nextLine();
                 System.out.println("Please enter your birthdate (mm/dd/yyyy): ");
                 d = sc.nextLine();
-                SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
                 client++;
                 System.out.println();
                 System.out.println();
@@ -104,13 +102,7 @@ public class App
                         System.out.println("Enter password: ");
                         p = sc.nextLine();
                         //System.out.println(customers.get(0).getUsername());
-
-                        for (Register r : customers) {
-                            if (r.getUsername().compareTo(u) == 0 && r.getPassword().compareTo(p) == 0) {
-                                    System.out.println("Login Successful!");
-                                    success = true;
-                            }
-                    }
+                        currentUser.checkjointaccount(u,p);
                     
                 }
                 }while(success == false);
@@ -260,9 +252,9 @@ public class App
     }
 
     public static void deleteClients(Scanner sc, User currentUser){
-        String client_id;
+        String client_id = "";
         System.out.println("Enter username of the client you want to remove");
-        client_id = sc.nextLine();
+        sc.nextLine();
         client_id = sc.nextLine();
         currentUser.delete(client_id);
     }
@@ -275,20 +267,24 @@ public class App
         System.out.println("Type in the client id number to join accounts with");
         account_b = sc.nextInt();
         System.out.println();
-        username = sc.nextLine();
-        System.out.println("Create username");
-        username = sc.nextLine();
-        System.out.println("Create password");
-        password = sc.nextLine();
+        f = sc.nextLine();
+        System.out.println("Please enter the first name of one of the account owners: ");
+        f = sc.nextLine();
+        System.out.println("Please enter the first name of the other account owner: ");
+        l = sc.nextLine();
+        System.out.println("Create your username: ");
+        u = sc.nextLine();
+        System.out.println("Create your password: ");
+        p = sc.nextLine();
         check_a = currentUser.get_checking_balance(account_a);
         savings_a = currentUser.get_savings_balance(account_a);
         check_b = currentUser.get_checking_balance(account_b);
         savings_b = currentUser.get_savings_balance(account_b);
-        currentUser.joinAccounts(account_a,account_b,check_a,savings_a,check_b,savings_b,username,password);
+        currentUser.joinAccounts(account_a,account_b,check_a,savings_a,check_b,savings_b,u,p);
         client++;
         System.out.printf("New user created.");
         System.out.printf("Your id: %s \n", client);
-        System.out.printf("Your username: %s, Your password: %s. Store information in a secure place. \n", username, password);
+        System.out.printf("Your username: %s, Your password: %s. Store information in a secure place. \n", u, p);
         App.mainMenu(currentUser);
     }
 

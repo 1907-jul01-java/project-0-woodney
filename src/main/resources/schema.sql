@@ -38,11 +38,16 @@ create table joint (
     savings_account_balance numeric(12,2)
 );
 
+create or replace function get_client_id(client_name text) returns integer as
+$$
+  select id from client where firstname = client_name;
+$$ language sql;
+
 insert into employee(employee_username,employee_password) values ('2713839','revature45');
---insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('woodneyg', 'password','Woodney', 'Guerrier','10802 Ryan Oaks Dr', 'Houston', 'Texas', '12/15/1994');
---insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('BobbyS', 'yolo45','Bobby', 'Shmurda','10452 Green Ave', 'Harlen', 'New York', '1/5/1990');
---insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('Zen97', 'euphoria','Zendaya', 'Coleman','12345 Happy Ln', 'Los Angelos', 'California', '4/28/1997');
---insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('ruth30', 'leo3030','Ruth', 'Guerrier','13415 Lynnville Dr', 'Houston', 'Texas', '07/30/1996');
+insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('woodneyg', 'password','Woodney', 'Guerrier','10802 Ryan Oaks Dr', 'Houston', 'Texas', '12/15/1994');
+insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('BobbyS', 'yolo45','Bobby', 'Shmurda','10452 Green Ave', 'Harlen', 'New York', '1/5/1990');
+insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('Zen97', 'euphoria','Zendaya', 'Coleman','12345 Happy Ln', 'Los Angelos', 'California', '4/28/1997');
+insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('ruth30', 'leo3030','Ruth', 'Guerrier','13415 Lynnville Dr', 'Houston', 'Texas', '07/30/1996');
 --select * from client;
 --delete from client where id = 1;
 --insert into bankAccount(checking_account_balance,savings_account_balance) values (4000, 3000);

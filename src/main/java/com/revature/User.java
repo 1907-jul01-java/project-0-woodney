@@ -48,6 +48,35 @@ public class User implements UserDao<Register> {
         }
     }
 
+    public void checkjointaccount(String u, String p){
+        try {
+            PreparedStatement pStatement = connection.prepareStatement("select from joint where username = ? and password = ?");
+            pStatement.setString(1, u);
+            pStatement.setString(2, p);
+            ResultSet rs = pStatement.executeQuery();
+
+            while (rs.next()) {
+                
+                System.out.print("U/P?: ");
+                System.out.print(rs.getString(1));
+                System.out.println();
+                System.out.print("U/P?: ");
+                System.out.print(rs.getString(2));
+                System.out.println();
+                System.out.println("U/P: ");
+                System.out.print(rs.getString(3));
+                System.out.println();
+                System.out.print("U/P: ");
+                System.out.print(rs.getString(4));
+                System.out.println();
+            }
+            
+
+        } catch (SQLException e) {
+
+        }
+    }
+
     public void viewAccount(int c){
 
         try {
@@ -73,9 +102,9 @@ public class User implements UserDao<Register> {
     public void delete(String c) {
 
         try {
-            PreparedStatement pStatement = connection.prepareStatement("delete * from client where username = ?");
+            PreparedStatement pStatement = connection.prepareStatement("delete from client where username =?");
             pStatement.setString(1, c);
-            pStatement.executeUpdate();
+            pStatement.execute();
 
         } catch (SQLException e) {
 
