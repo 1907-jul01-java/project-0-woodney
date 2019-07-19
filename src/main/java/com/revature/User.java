@@ -48,32 +48,33 @@ public class User implements UserDao<Register> {
         }
     }
 
-    public void checkjointaccount(String u, String p){
+    public boolean checkjointaccount(String u, String p) {
+        boolean success = false;
         try {
-            PreparedStatement pStatement = connection.prepareStatement("select from joint where username = ? and password = ?");
+            PreparedStatement pStatement = connection.prepareStatement("select * from joint where username = ? and password = ?");
             pStatement.setString(1, u);
             pStatement.setString(2, p);
             ResultSet rs = pStatement.executeQuery();
 
             while (rs.next()) {
                 
-                System.out.print("U/P?: ");
-                System.out.print(rs.getString(1));
-                System.out.println();
-                System.out.print("U/P?: ");
-                System.out.print(rs.getString(2));
-                System.out.println();
-                System.out.println("U/P: ");
+                if(rs.getString(2).compareTo(u) == 0 && rs.getString(3).compareTo(p) == 0) {
+                    success = true;
+                }
+                
                 System.out.print(rs.getString(3));
-                System.out.println();
-                System.out.print("U/P: ");
-                System.out.print(rs.getString(4));
-                System.out.println();
             }
             
 
         } catch (SQLException e) {
 
+        }
+
+        if(success = true){
+            return true;
+        }
+        else{
+        return false;
         }
     }
 
@@ -99,12 +100,16 @@ public class User implements UserDao<Register> {
 
         }
     }
-    public void delete(String c) {
+
+    public void delete(String c, int a) {
 
         try {
-            PreparedStatement pStatement = connection.prepareStatement("delete from client where username =?");
-            pStatement.setString(1, c);
+            PreparedStatement pStatement = connection.prepareStatement("delete from bankaccount where id =?");
+            pStatement.setInt(1, a);
             pStatement.execute();
+            PreparedStatement pst = connection.prepareStatement("delete from client where username =?");
+            pst.setString(1, c);
+            pst.execute();
 
         } catch (SQLException e) {
 
@@ -113,6 +118,7 @@ public class User implements UserDao<Register> {
     }
 
     public void insert() {
+
 
     }
 

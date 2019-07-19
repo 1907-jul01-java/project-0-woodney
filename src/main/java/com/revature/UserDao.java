@@ -9,10 +9,10 @@ public interface UserDao<E>
     void insert();
     void view();
     void viewAccount(int c);
-    void delete(String c);
+    void delete(String c,int a);
     void createUser(E e);
     void get_username();
-    void checkjointaccount(String u, String p);
+    boolean checkjointaccount(String u, String p);
     int get_savings_balance(int c);
     int get_checking_balance(int c);
     void printSummary(int c);

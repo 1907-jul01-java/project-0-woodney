@@ -78,6 +78,7 @@ public class App
                     System.out.println("Please select one of the following: ");
                     System.out.println("1.Personal Account");
                     System.out.println("2.Joint Account");
+                    System.out.println("3.Exit");
                     acctChoice = sc.nextInt();
                     if(acctChoice == 1)
                     {
@@ -102,8 +103,16 @@ public class App
                         System.out.println("Enter password: ");
                         p = sc.nextLine();
                         //System.out.println(customers.get(0).getUsername());
-                        currentUser.checkjointaccount(u,p);
-                    
+                        if(currentUser.checkjointaccount(u,p) == true) {
+                            System.out.println("Login Successful!");
+                            success = true;
+                        }
+                        else{
+                            System.out.println("Login failed");
+                        }
+                }
+                else if(acctChoice == 3){
+                    App.userMenu(sc, currentUser);
                 }
                 }while(success == false);
 
@@ -126,6 +135,7 @@ public class App
                         if (e.getUsername().compareTo(u) == 0 && e.getPassword().compareTo(p) == 0) {
                                 System.out.println("Login Successful!");
                                 success = true;
+                                App.employeeMenu(sc, currentUser);
                         }
                 }
             }while(success == false);
@@ -159,15 +169,14 @@ public class App
             System.out.println("  2) Deposit");
             System.out.println("  3) Transfer");
             System.out.println("  4) Create joint account");
-            System.out.println("  5) Employee?");
-            System.out.println("  6) Logout");
+            System.out.println("  5) Logout");
             choice = sc.nextInt();
 
             if (choice < 1 || choice > 6)
             {
                 System.out.println("Invalid choice. Please choose 1-5");
             }
-        }while(choice < 1 || choice > 6);
+        }while(choice < 1 || choice > 5);
 
         switch (choice) {
 
@@ -185,8 +194,6 @@ public class App
                 App.createJointAccount(sc,currentUser);
                 break;
             case 5:
-                App.employeeMenu(sc,currentUser);
-            case 6:
                 App.mainMenu(currentUser);
         }
 
@@ -252,11 +259,14 @@ public class App
     }
 
     public static void deleteClients(Scanner sc, User currentUser){
-        String client_id = "";
+        String client_username = "";
+        int client_id = 0;
+        System.out.println("Enter the id of the client you want to remove");
+        client_id = sc.nextInt();
         System.out.println("Enter username of the client you want to remove");
         sc.nextLine();
-        client_id = sc.nextLine();
-        currentUser.delete(client_id);
+        client_username = sc.nextLine();
+        currentUser.delete(client_username,client_id);
     }
 
     public static void createJointAccount(Scanner sc, User currentUser){
