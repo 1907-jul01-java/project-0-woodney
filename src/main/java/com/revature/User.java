@@ -101,7 +101,7 @@ public class User implements UserDao<Register> {
         }
     }
 
-    public void delete(String c, int a) {
+    public void deleteAccount(String c, int a) {
 
         try {
             PreparedStatement pStatement = connection.prepareStatement("delete from bankaccount where id =?");

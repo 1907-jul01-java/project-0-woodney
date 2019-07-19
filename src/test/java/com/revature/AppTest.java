@@ -18,26 +18,36 @@ public class AppTest {
     Connection connection;
     Scanner sc = new Scanner(System.in);
     
-    @Before
-    public void get_username() {
-       
+    @Test
+    public boolean checkjointaccount(String u, String p) {
+        boolean success = false;
         try {
-            PreparedStatement pst = connection.prepareStatement("select * from client");
-            ResultSet rs = pst.executeQuery();
+            PreparedStatement pStatement = connection.prepareStatement("select * from joint where username = ? and password = ?");
+            pStatement.setString(1, u);
+            pStatement.setString(2, p);
+            ResultSet rs = pStatement.executeQuery();
 
             while (rs.next()) {
-            
-                System.out.print(rs.getInt(1));
-                System.out.print(": ");
-                System.out.print(rs.getString(2));
-                System.out.print(": ");
+                
+                if(rs.getString(2).compareTo(u) == 0 && rs.getString(3).compareTo(p) == 0) {
+                    success = true;
+                }
+                
                 System.out.print(rs.getString(3));
             }
-        } catch (SQLException e) {
             
+
+        } catch (SQLException e) {
+
+        }
+
+        if(success = true){
+            return true;
+        }
+        else{
+        return false;
         }
     }
-    
     @Test
     public void TestUser() 
     {
@@ -46,11 +56,15 @@ public class AppTest {
 
     @Test
     public static void deleteClients(Scanner sc, User currentUser){
-        String client_id;
+        String client_username = "";
+        int client_id = 0;
+        System.out.println("Enter the id of the client you want to remove");
+        client_id = sc.nextInt();
         System.out.println("Enter username of the client you want to remove");
-        client_id = sc.nextLine();
-        client_id = sc.nextLine();
-        currentUser.delete(client_id);
+        sc.nextLine();
+        client_username = sc.nextLine();
+        currentUser.deleteAccount(client_username,client_id);
     }
+
 
 }

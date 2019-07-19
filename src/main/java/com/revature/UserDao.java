@@ -9,7 +9,7 @@ public interface UserDao<E>
     void insert();
     void view();
     void viewAccount(int c);
-    void delete(String c,int a);
+    void deleteAccount(String c,int a);
     void createUser(E e);
     void get_username();
     boolean checkjointaccount(String u, String p);

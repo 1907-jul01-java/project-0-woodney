@@ -209,7 +209,7 @@ public class App
         do{
         System.out.printf("Welcome, what would you like to do?\n");
             System.out.println("  1) View Client Information");
-            System.out.println("  2) Delete");
+            System.out.println("  2) Delete Account");
             System.out.println("  3) View Client Accounts");
             System.out.println("  4) Logout");
             choice = sc.nextInt();
@@ -266,7 +266,7 @@ public class App
         System.out.println("Enter username of the client you want to remove");
         sc.nextLine();
         client_username = sc.nextLine();
-        currentUser.delete(client_username,client_id);
+        currentUser.deleteAccount(client_username,client_id);
     }
 
     public static void createJointAccount(Scanner sc, User currentUser){
