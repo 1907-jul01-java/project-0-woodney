@@ -35,7 +35,8 @@ public class App
             System.out.println("1.Register");
             System.out.println("2.Login");
             System.out.println("3.Employee Login");
-            System.out.println("4.Exit");
+            System.out.println("4.Administator");
+            System.out.println("5.Exit");
             num = sc.nextInt();
 
             if (num == 1)
@@ -144,17 +145,40 @@ public class App
             }
             }
 
+            else if(num == 4) {
+                boolean success = false;
+                do {
+                    u = sc.nextLine();
+                    System.out.println("Enter username: ");
+                    u = sc.nextLine();
+                    System.out.println("Enter password: ");
+                    p = sc.nextLine();
+                    if(currentUser.checkadminaccount(u,p) == true) {
+                        System.out.println("Login Successful!");
+                        success = true;
+                        App.adminMenu(sc,currentUser);
+                    }
+                    else{
+                        System.out.println("Login failed");
+                    }
+            }while(success == false);
+             while(true) {
+                App.userMenu(sc,currentUser);  
+            }
+        }
+
+
     
-            else if (num < 1 || num > 4)
+            else if (num < 1 || num > 5)
             {
                 System.err.println("Error, Invalid Entry");
             }
 
-            else if (num == 4){
+            else if (num == 5){
                 System.exit(1);
             }
 
-        }while(num != 4);
+        }while(num != 5);
 
     }
 
@@ -204,6 +228,66 @@ public class App
         App.mainMenu(currentUser);
     }
 
+    public static void adminMenu(Scanner sc, User currentUser) {
+        int choice;
+        do{
+        System.out.printf("Welcome, what would you like to do?\n");
+            System.out.println("  1) View Client Information");
+            System.out.println("  2) Delete Account");
+            System.out.println("  3) View Client Accounts");
+            System.out.println("  4) Insert into Accounts");
+            System.out.println("  5) Remove from Accounts");
+            System.out.println("  6) View Pending Accounts");
+            System.out.println("  7) Logout");
+            choice = sc.nextInt();
+        
+            if (choice < 1 || choice > 7)
+            {
+                System.out.println("Invalid choice. Please choose 1-5");
+            }
+        }while(choice < 1 || choice >7);
+
+        switch (choice) {
+
+            
+            case 1: 
+                App.viewClients(sc,currentUser);
+                App.adminMenu(sc, currentUser);
+                break;
+            case 2:
+                App.deleteClients(sc,currentUser);
+                App.adminMenu(sc, currentUser);
+                break;
+            case 3:
+                App.viewClientAccounts(sc,currentUser);
+                App.adminMenu(sc, currentUser);
+                break;
+            case 4:
+                App.insertAccountFunds(sc,currentUser);
+                App.adminMenu(sc, currentUser);
+                break;  
+            case 5:
+                App.removeAccountFunds(sc,currentUser);
+                App.adminMenu(sc, currentUser);
+                break;
+            case 6:
+                App.viewPendingAccounts(sc,currentUser);
+                App.adminMenu(sc, currentUser);
+                break;
+            case 7:
+                App.mainMenu(currentUser);
+                break;
+        
+        }
+
+        if (choice !=7){
+            App.userMenu(sc, currentUser);
+        }
+
+        App.mainMenu(currentUser);
+
+    }
+    
     public static void employeeMenu(Scanner sc, User currentUser) {
         int choice;
         do{
@@ -245,6 +329,60 @@ public class App
         }
 
         App.mainMenu(currentUser);
+
+    }
+
+    public static void insertAccountFunds(Scanner sc, User currentUser) {
+        String client_username = "";
+        int toAcct = 0;
+        int client_id = 0;
+        int amount = 0;
+        String checking = "checking_account_balance";
+        String savings = "savings_account_balance";
+        System.out.println("Enter the id of the client");
+        client_id = sc.nextInt();
+        System.out.println("1.Checking?");
+        System.out.println("2.Savings?");
+        toAcct = sc.nextInt();
+        System.out.print("Enter the amount to deposit: ");
+        amount = sc.nextInt();
+        if(toAcct == 1){
+        System.out.println("Deposit to checking account");
+        currentUser.depositFunds(amount, checking,client_id);
+        App.userMenu(sc, currentUser);
+        }
+        else{
+        System.out.println("Deposit to savings account");
+        currentUser.depositFunds(amount,savings,client_id);
+        App.adminMenu(sc, currentUser);
+        }
+    }
+    public static void removeAccountFunds(Scanner sc, User currentUser){
+        String client_username = "";
+        int toAcct = 0;
+        int client_id = 0;
+        int amount = 0;
+        String checking = "checking_account_balance";
+        String savings = "savings_account_balance";
+        System.out.println("Enter the id of the client");
+        client_id = sc.nextInt();
+        System.out.println("1.Checking?");
+        System.out.println("2.Savings?");
+        toAcct = sc.nextInt();
+        System.out.print("Enter the amount to withdraw: ");
+        amount = sc.nextInt();
+        if(toAcct == 1){
+        System.out.println("Withdraw from checking account");
+        currentUser.withdrawFunds(amount, checking,client_id);
+        App.adminMenu(sc, currentUser);
+        }
+        else{
+        System.out.println("Withdraw from savings account");
+        currentUser.depositFunds(amount,savings,client_id);
+        App.userMenu(sc, currentUser);
+        }
+    }
+    public static void viewPendingAccounts(Scanner sc, User currentUser){
 
     }
 

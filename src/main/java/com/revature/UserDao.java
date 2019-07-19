@@ -6,12 +6,12 @@ import java.util.List;
  */
 public interface UserDao<E> 
 {
-    void insert();
     void view();
     void viewAccount(int c);
     void deleteAccount(String c,int a);
     void createUser(E e);
     void get_username();
+    boolean checkadminaccount(String u, String p);
     boolean checkjointaccount(String u, String p);
     int get_savings_balance(int c);
     int get_checking_balance(int c);

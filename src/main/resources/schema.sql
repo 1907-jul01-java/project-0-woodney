@@ -1,4 +1,4 @@
-drop table if exists client,bankaccount,bankTransaction,employee,joint;
+drop table if exists client,bankaccount,bankTransaction,employee,joint,admin;
 drop sequence if exists client_id_seq,bank_id_seq;
 --create sequence client_id_seq increment by 30 minvalue 400000 maxvalue 20000000 start with 428193;
 --create sequence bank_id_seq increment by 30 minvalue 400000 maxvalue 20000000 start with 428193;
@@ -14,6 +14,12 @@ drop sequence if exists client_id_seq,bank_id_seq;
     city text not null,
     user_state text not null,
     DOB text not null
+);
+
+create table admin(
+    id serial primary key,
+    username text not null,
+    admin_password text not null
 );
 
 
@@ -44,6 +50,7 @@ $$
 $$ language sql;
 
 insert into employee(employee_username,employee_password) values ('2713839','revature45');
+insert into admin(username,admin_password) values ('jojo', 'ohmygod');
 --insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('woodneyg', 'password','Woodney', 'Guerrier','10802 Ryan Oaks Dr', 'Houston', 'Texas', '12/15/1994');
 --insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('BobbyS', 'yolo45','Bobby', 'Shmurda','10452 Green Ave', 'Harlen', 'New York', '1/5/1990');
 --insert into client(username,user_password,firstname,lastname,user_address,city,user_state,DOB) values ('Zen97', 'euphoria','Zendaya', 'Coleman','12345 Happy Ln', 'Los Angelos', 'California', '4/28/1997');

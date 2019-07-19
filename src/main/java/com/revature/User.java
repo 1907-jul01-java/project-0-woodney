@@ -48,6 +48,36 @@ public class User implements UserDao<Register> {
         }
     }
 
+    public boolean checkadminaccount(String u, String p){
+        boolean success = false;
+        try {
+            PreparedStatement pStatement = connection.prepareStatement("select * from admin where username = ? and password = ?");
+            pStatement.setString(1, u);
+            pStatement.setString(2, p);
+            ResultSet rs = pStatement.executeQuery();
+
+            while (rs.next()) {
+                
+                if(rs.getString(2).compareTo(u) == 0 && rs.getString(3).compareTo(p) == 0) {
+                    success = true;
+                }
+                
+                System.out.print(rs.getString(3));
+            }
+            
+
+        } catch (SQLException e) {
+
+        }
+
+        if(success = true){
+            return true;
+        }
+        else{
+        return false;
+        }
+    }
+    
     public boolean checkjointaccount(String u, String p) {
         boolean success = false;
         try {
